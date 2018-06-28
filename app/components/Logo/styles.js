@@ -21,6 +21,6 @@ export default EStyleSheet.create({
         //fontWeight: 'bold',
         fontSize: 28,
         //letterSpacing: -0.5,
-        marginTop: 20
+        marginVertical: 20
     }
 });
