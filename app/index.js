@@ -1,11 +1,14 @@
 import React from 'react';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
-//import Home from './screens/Home';
-import Options from './screens/Options';
+import Navigator from './config/routes';
 
 EStyleSheet.build({
-    $primaryColor: '#4F6D7A',
+    $primaryBlue: '#4F6D7A',
+    $primaryOrange: '#D57A66',
+    $primaryGreen: '#00BD9D',
+    $primaryPurple: '#9E768F',
+
     $white: '#FFF',
     $lightGray: '#F0F0F0',
     $border: '#E2E2E2',
@@ -15,4 +18,4 @@ EStyleSheet.build({
     //$outline: 1
 });
 
-export default () => <Options />;
+export default () => <Navigator />;
