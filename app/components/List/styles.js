@@ -2,6 +2,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { StyleSheet } from 'react-native';
 
 export default EStyleSheet.create({
+    $underlayColor: '$border',
     row: {
         paddingHorizontal: 20,
         paddingVertical: 16,
@@ -19,5 +20,19 @@ export default EStyleSheet.create({
         backgroundColor: '$border',
         flex: 1,
         height: StyleSheet.hairlineWidth
+    },
+    icon: {
+        backgroundColor: 'transparent',
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    iconVisible: {
+        backgroundColor: '$primaryColor'
+    },
+    checkIcon: {
+        width: 18
     }
 });
