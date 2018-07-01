@@ -1,12 +1,12 @@
 import { StatusBar } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator, c } from 'react-navigation';
 
 import Home from '../screens/Home';
 import CurrencyList from '../screens/CurrencyList';
 import Options from '../screens/Options';
 import Themes from '../screens/Themes';
 
-const homeStack = StackNavigator({
+const homeStack = createStackNavigator({
     Home: {
         screen: Home,
         navigationOptions: {
@@ -27,7 +27,7 @@ const homeStack = StackNavigator({
     }
 }, { headerMode: 'screen' });
 
-const currencyListStack = StackNavigator({
+const currencyListStack = createStackNavigator({
     CurrencyList: {
         screen: CurrencyList,
         navigationOptions: ({ navigation }) => ({
@@ -38,13 +38,10 @@ const currencyListStack = StackNavigator({
 
 const stackNavigatorOptions = {
     mode: 'modal',
-    cardStyle: {
-        paddingTop: StatusBar.currentHeight
-    },
     headerMode: 'none'
 };
 
-export default StackNavigator({
+export default createStackNavigator({
     Home: {
         screen: homeStack
     },

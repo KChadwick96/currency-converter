@@ -49,7 +49,7 @@ class Themes extends Component {
                 <ListItem
                     text='Green'
                     onPress={() => this.handleThemePress(styles.$green)}
-                    selected=
+                    selected
                     checkmark={false}
                     iconBackground={styles.$green}
                 />
