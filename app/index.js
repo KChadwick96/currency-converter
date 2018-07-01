@@ -7,10 +7,11 @@ import { AlertProvider } from './components/Alert';
 import store from './config/store';
 
 EStyleSheet.build({
-    $primaryBlue: '#4F6D7A',
+    $primaryBlue: '#004e89',
     $primaryOrange: '#D57A66',
     $primaryGreen: '#00BD9D',
     $primaryPurple: '#9E768F',
+    $primaryRed: '#ff2b40',
 
     $white: '#FFF',
     $lightGray: '#F0F0F0',

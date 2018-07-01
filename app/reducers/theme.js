@@ -1,7 +1,7 @@
 import { CHANGE_PRIMARY_COLOR } from '../actions/themes';
 
 const initialState = {
-    primaryColor: '#4F6D7A'
+    primaryColor: '#004e89'
 };
 
 const reducer = (state = initialState, action) => {
