@@ -21,7 +21,8 @@ class Home extends Component {
         amount: PropTypes.number,
         conversionRate: PropTypes.number,
         isFetching: PropTypes.bool,
-        lastConvertedDate: PropTypes.object
+        lastConvertedDate: PropTypes.object,
+        primaryColor: PropTypes.string
     };
 
     handlePressBaseCurrency = () => {
@@ -52,23 +53,25 @@ class Home extends Component {
         }
 
         return (
-            <Container>
+            <Container backgroundColor={this.props.primaryColor}>
                 <StatusBar translucent={false} barStyle='light-content' />
                 <Header onPress={this.handleOptionsPress} />
                 <KeyboardAvoidingView behavior='padding'>
-                    <Logo />
+                    <Logo tintColor={this.props.primaryColor} />
                     <InputWithButton
                         buttonText={this.props.baseCurrency}
                         onPress={this.handlePressBaseCurrency}
                         defaultValue={this.props.amount.toString()}
                         keyboardType='numeric'
                         onChangeText={this.handleTextChange}
+                        textColor={this.props.primaryColor}
                     />
                     <InputWithButton
                         buttonText={this.props.quoteCurrency}
                         onPress={this.handlePressQuoteCurrency}
                         editable={false}
                         defaultValue={quotePrice}
+                        textColor={this.props.primaryColor}
                     />
                     <LastConverted
                         base={this.props.baseCurrency}
@@ -98,7 +101,8 @@ const mapStateToProps = state => {
         amount: state.currencies.amount,
         conversionRate: rates[quoteCurrency] || 0,
         isFetching: conversionSelector.isFetching,
-        lastConvertedDate: conversionSelector.date ? new Date(conversionSelector.date) : new Date()
+        lastConvertedDate: conversionSelector.date ? new Date(conversionSelector.date) : new Date(),
+        primaryColor: state.theme.primaryColor
     };
 };
 

@@ -4,17 +4,22 @@ import PropTypes from 'prop-types';
 
 import styles from './styles';
 
-Keyboard.dismiss()
-const Container = ({ children }) => (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-            {children}
-        </View>
-    </TouchableWithoutFeedback>
-);
+const Container = ({ children, backgroundColor }) => {
+
+    const containerStyles = [styles.container, { backgroundColor }];
+
+    return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={containerStyles}>
+                {children}
+            </View>
+        </TouchableWithoutFeedback>
+    );
+};
 
 Container.propTypes = {
-    children: PropTypes.any
+    children: PropTypes.any,
+    backgroundColor: PropTypes.string
 };
 
 export default Container;
