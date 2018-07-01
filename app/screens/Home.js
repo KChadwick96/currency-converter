@@ -99,7 +99,7 @@ class Home extends Component {
                     />
                 </KeyboardAvoidingView>
             </Container>
-        )
+        );
     }
 }
 

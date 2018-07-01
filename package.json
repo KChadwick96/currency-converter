@@ -29,6 +29,7 @@
     "react-native": "~0.55.2",
     "react-native-dropdownalert": "3.4.0",
     "react-native-extended-stylesheet": "0.8.1",
+    "react-native-pose": "^0.3.0",
     "react-navigation": "2.5.5",
     "react-redux": "5.0.7",
     "redux": "^4.0.0",

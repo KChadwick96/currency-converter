@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text, Keyboard, Animated, StyleSheet, Platform } from 'react-native';
+import { View, Text, Keyboard, StyleSheet, Platform, Animated } from 'react-native';
 import PropTypes from 'prop-types';
+import posed from 'react-native-pose';
 
 import styles from './styles';
-
-const ANIMATION_DURATION = 250;
 
 class Logo extends Component {
 
@@ -16,20 +15,62 @@ class Logo extends Component {
         super(props);
 
         this.state = {
-            containerImageWidth: new Animated.Value(styles.$largeContainerSize),
-            imageWidth: new Animated.Value(styles.$largeImageSize),
+            keyboardOpen: false
         };
+
+        const toLargeTransition = ({ value, toValue, useNativeDriver }) => {
+            return Animated.timing(value, {
+                toValue,
+                useNativeDriver,
+                duration: 200
+            });
+        };
+        const toSmallTransition = ({ value, toValue, useNativeDriver }) => {
+            return Animated.timing(value, {
+                toValue,
+                useNativeDriver,
+                duration: 300
+            });
+        };
+
+        const containerAnimationConfig = {
+            large: {
+                width: styles.$largeContainerSize,
+                height: styles.$largeContainerSize,
+                transition: toLargeTransition
+            },
+            small: {
+                width: styles.$smallContainerSize,
+                height: styles.$smallContainerSize,
+                transition: toSmallTransition
+            }
+        };
+
+        const imageAnimationConfig = {
+            large: {
+                width: styles.$largeImageSize,
+                transition: toLargeTransition
+            },
+            small: {
+                width: styles.$smallImageSize,
+                transition: toSmallTransition
+            }
+        };
+
+        this.posedLogoContainer = posed.View(containerAnimationConfig);
+        this.posedLogoBackground = posed.Image(containerAnimationConfig);
+        this.posedImage = posed.Image(imageAnimationConfig);
     }
 
     componentDidMount() {
         const name = Platform.OS === 'ios' ? 'Will' : 'Did';
         this.keyboardDidShowListener = Keyboard.addListener(
             `keyboard${name}Show`,
-            this.keyboardShow,
+            () => this.setState({ keyboardOpen: true }),
         );
         this.keyboardDidHideListener = Keyboard.addListener(
             `keyboard${name}Hide`,
-            this.keyboardHide,
+            () => this.setState({ keyboardOpen: false }),
         );
     }
 
@@ -38,58 +79,36 @@ class Logo extends Component {
         this.keyboardDidHideListener.remove();
     }
 
-    keyboardShow = () => {
-        Animated.parallel([
-            Animated.timing(this.state.containerImageWidth, {
-                toValue: styles.$smallContainerSize,
-                duration: ANIMATION_DURATION
-            }),
-            Animated.timing(this.state.imageWidth, {
-                toValue: styles.$smallImageSize,
-                duration: ANIMATION_DURATION
-            })
-        ]).start();
-    };
-
-    keyboardHide = () => {
-        Animated.parallel([
-            Animated.timing(this.state.containerImageWidth, {
-                toValue: styles.$largeContainerSize,
-                duration: ANIMATION_DURATION
-            }),
-            Animated.timing(this.state.imageWidth, {
-                toValue: styles.$largeImageSize,
-                duration: ANIMATION_DURATION
-            })
-        ]).start();
-    };
-
     render() {
-        const containerImageStyle = [
-            styles.containerImage,
-            { width: this.state.containerImageWidth, height: this.state.containerImageWidth }
-        ];
-
         const imageStyle = [
             styles.image,
-            { width: this.state.imageWidth },
             this.props.tintColor ? { tintColor: this.props.tintColor } : null
-        ]
+        ];
+
+        const PosedLogoContainer = this.posedLogoContainer;
+        const PosedLogoBackground = this.posedLogoBackground;
+        const PosedLogo = this.posedImage;
+
+        const poseState = this.state.keyboardOpen ? 'small' : 'large';
 
         return (
             <View style={styles.container}>
-                <Animated.View style={containerImageStyle}>
-                    <Animated.Image
+                <PosedLogoContainer style={styles.containerImage} initialPose='large' pose={poseState}>
+                    <PosedLogoBackground
+                        initialPose='large'
+                        pose={poseState}
                         source={require('./images/background.png')}
-                        style={[StyleSheet.absoluteFill, containerImageStyle]}
+                        style={[StyleSheet.absoluteFill, styles.containerImage]}
                         resizeMode='contain'
                     />
-                    <Animated.Image
+                    <PosedLogo
+                        initialPose='large'
+                        pose={poseState}
                         source={require('./images/logo.png')}
                         style={imageStyle}
                         resizeMode='contain'
                     />
-                </Animated.View>
+                </PosedLogoContainer>
                 <Text style={styles.text}>Currency Converter</Text>
             </View>
         );
