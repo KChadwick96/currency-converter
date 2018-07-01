@@ -18,7 +18,7 @@ EStyleSheet.build({
     $inputText: '#797979',
     $darkText: '#343434',
 
-    $outline: 1
+    //$outline: 1
 });
 
 export default () => (

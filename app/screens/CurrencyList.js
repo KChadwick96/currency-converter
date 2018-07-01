@@ -11,12 +11,13 @@ class CurrencyList extends Component {
 
     static propTypes = {
         navigation: PropTypes.object,
-        dispatch: PropTypes.func
+        dispatch: PropTypes.func,
+        baseCurrency: PropTypes.string,
+        quoteCurrency: PropTypes.string
     };
 
     handlePress = currency => {
         const { type } = this.props.navigation.state.params;
-        console.log(type);
 
         if (type === 'base') {
             this.props.dispatch(changeBaseCurrency(currency))
@@ -28,6 +29,13 @@ class CurrencyList extends Component {
     };
 
     render() {
+        const { type } = this.props.navigation.state.params;
+
+        let selectedCurrency = this.props.baseCurrency;
+        if (type === 'quote') {
+            selectedCurrency = this.props.quoteCurrency;
+        }
+
         return (
             <View style={{ flex: 1 }}>
                 <StatusBar barStyle='default' translucent={false} />
@@ -36,7 +44,7 @@ class CurrencyList extends Component {
                     renderItem={({ item }) => (
                         <ListItem
                             text={item}
-                            selected={true}
+                            selected={item === selectedCurrency}
                             onPress={() => this.handlePress(item)}
                         />
                     )}
@@ -48,4 +56,9 @@ class CurrencyList extends Component {
     }
 }
 
-export default connect()(CurrencyList);
+const mapStateToProps = state => ({
+    baseCurrency: state.currencies.baseCurrency,
+    quoteCurrency: state.currencies.quoteCurrency
+});
+
+export default connect(mapStateToProps)(CurrencyList);
